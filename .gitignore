@@ -169,3 +169,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Tumblr scrape data and outputs
+tumblr_data_scrape/data/
+tumblr_data_scrape/outputs/
+tumblr_data_scrape/.mypy_cache/
