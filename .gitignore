@@ -171,8 +171,6 @@ cython_debug/
 .pypirc
 
 # Tumblr scrape data and outputs
-# tumblr_data_scrape/data/raw_data/
-# tumblr_data_scrape/data/preprocessed_posts/
-tumblr_data_scrape/data/
+tumblr_data_scrape/data/raw_data/
 tumblr_data_scrape/outputs/
 tumblr_data_scrape/.mypy_cache/

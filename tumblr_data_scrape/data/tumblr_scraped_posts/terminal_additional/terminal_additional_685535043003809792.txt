@@ -1,0 +1,8 @@
+Blog: living-with-prostate-cancer
+Timestamp: 2022-05-28 22:32:43
+Tags: Spotify
+URL: https://www.tumblr.com/blog/view/living-with-prostate-cancer/685535043003809792
+
+One of my favourites
+
+<h2>One of my favourites </h2><figure data-npf='{"type":"audio","provider":"spotify","url":"https://open.spotify.com/track/62bUqzJCBwQekVyC3k6z2J","title":"Long Hot Summer - Single Version","artist":"The Style Council","album":"Greatest Hits","embed_url":"https://open.spotify.com/embed?uri=https%3A%2F%2Fopen.spotify.com%2Ftrack%2F62bUqzJCBwQekVyC3k6z2J&amp;amp;view=coverart","poster":[{"media_key":"bf1f573f6973f2ca32a69ec5b8b56e86:a7dd006778d4415d-bb","type":"image/jpeg","width":640,"height":635}],"metadata":{"id":"spotify:track:62bUqzJCBwQekVyC3k6z2J"},"attribution":{"type":"app","url":"https://open.spotify.com/track/62bUqzJCBwQekVyC3k6z2J","app_name":"spotify"},"embed_html":"&lt;iframe class=\"spotify_audio_player\" src=\"https://open.spotify.com/embed?uri=https%3A%2F%2Fopen.spotify.com%2Ftrack%2F62bUqzJCBwQekVyC3k6z2J&amp;amp;view=coverart\" frameborder=\"0\" allowtransparency=\"true\" width=\"500\" height=\"580\"&gt;&lt;/iframe&gt;"}'><iframe class="spotify_audio_player" src="https://open.spotify.com/embed?uri=https%3A%2F%2Fopen.spotify.com%2Ftrack%2F62bUqzJCBwQekVyC3k6z2J&amp;view=coverart" frameborder="0" allowtransparency="true" width="500" height="580"></iframe></figure>

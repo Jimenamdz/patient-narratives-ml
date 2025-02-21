@@ -1,0 +1,8 @@
+Blog: contentment-of-cats
+Timestamp: 2024-09-24 16:30:51
+Tags: content creators, authorship, intellectual property
+URL: https://contentment-of-cats.tumblr.com/post/762519697882316800/cloudflare-fires-finger-at-ai-and-llm-free-for-all
+
+Cloudflare fires finger at AI and LLM free-for-all content piracy.
+
+<h1>Cloudflare fires finger at AI and LLM free-for-all content piracy. </h1><p class="npf_link" data-npf='{"type":"link","url":"https://arstechnica.com/tech-policy/2024/09/cloudflare-lets-sites-block-ai-crawlers-with-one-click/","display_url":"https://arstechnica.com/tech-policy/2024/09/cloudflare-lets-sites-block-ai-crawlers-with-one-click/","title":"Cloudflare moves to end free, endless AI scraping with one-click blocking","description":"Cloudflare may charge an app store-like fee for its AI-scraping data marketplace.","site_name":"Ars Technica","poster":[{"media_key":"5d68400ff1c9a14a74d2ab3a747c1730:08a8d94793b88412-69","type":"image/jpeg","width":760,"height":380}]}'><a href="https://arstechnica.com/tech-policy/2024/09/cloudflare-lets-sites-block-ai-crawlers-with-one-click/" target="_blank">Cloudflare moves to end free, endless AI scraping with one-click blocking</a></p><p>The idea that creators should be paid for the use of their content, or have the freedom to block scraping entirely changes the &lsquo;rules&rsquo; for those who can&rsquo;t afford an IP attorney. Conde Nast can strike a deal with OpenAI for its content, and the NYT can sue, but the rest of us have been without recourse as our content and data drive profits for hundreds of companies. </p>
