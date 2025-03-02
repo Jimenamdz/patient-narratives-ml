@@ -1,0 +1,8 @@
+Blog: recordsbeersbattlestargalactica
+Timestamp: 2020-05-18 07:13:51
+Tags: Youtube
+URL: https://www.tumblr.com/blog/view/recordsbeersbattlestargalactica/618435477479047168
+
+
+
+<figure class="tmblr-full tmblr-embed" data-provider="youtube" data-url="https://youtu.be/p9_BsjMi4bM" data-orig-width="356" data-orig-height="200"><iframe width="540" height="304" id="youtube_iframe" src="https://www.youtube.com/embed/p9_BsjMi4bM?feature=oembed&amp;enablejsapi=1&amp;origin=https://safe.txmblr.com&amp;wmode=opaque" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></figure>

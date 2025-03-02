@@ -412,32 +412,32 @@ def main():
 
     # print(f"Fetching Tumblr posts tagged '{TAGS}'...")
     # posts = fetch_tumblr_posts(TAGS)
-    posts = load_saved_posts(RAW_DATA)
+    # posts = load_saved_posts(RAW_DATA)
 
-    for post in posts:
-        #save_post(post, RAW_DATA, filename_prefix="raw")
+    # for post in posts:
+    #     #save_post(post, RAW_DATA, filename_prefix="raw")
 
-        text_sources = [
-                post.get("summary", ""),
-                post.get("body", ""), 
-                post.get("content", ""), 
-                ]
-        full_text = " ".join(text_sources).strip()
+    #     text_sources = [
+    #             post.get("summary", ""),
+    #             post.get("body", ""), 
+    #             post.get("content", ""), 
+    #             ]
+    #     full_text = " ".join(text_sources).strip()
 
-        if re.search(self_experience_regex, full_text):
-            if re.search(terminal_regex, full_text):
-                save_post(post, OUTPUT_FOLDER_TERMINAL, filename_prefix="terminal")
-            elif re.search(non_terminal_regex, full_text):
-                save_post(post, OUTPUT_FOLDER_NON_TERMINAL, filename_prefix="non_terminal")
+    #     if re.search(self_experience_regex, full_text):
+    #         if re.search(terminal_regex, full_text):
+    #             save_post(post, OUTPUT_FOLDER_TERMINAL, filename_prefix="terminal")
+    #         elif re.search(non_terminal_regex, full_text):
+    #             save_post(post, OUTPUT_FOLDER_NON_TERMINAL, filename_prefix="non_terminal")
 
     # Process additional posts for terminal posts
-    print("=== Processing additional posts for terminal users ===")
-    process_additional_posts(
-        input_folder=OUTPUT_FOLDER_TERMINAL,
-        raw_output_folder=OUTPUT_FOLDER_TERMINAL_ADDITIONAL,
-        preprocessed_output_folder=PREPROCESSED_TERMINAL_ADDITIONAL,
-        label_prefix="terminal"
-    )
+    # print("=== Processing additional posts for terminal users ===")
+    # process_additional_posts(
+    #     input_folder=OUTPUT_FOLDER_TERMINAL,
+    #     raw_output_folder=OUTPUT_FOLDER_TERMINAL_ADDITIONAL,
+    #     preprocessed_output_folder=PREPROCESSED_TERMINAL_ADDITIONAL,
+    #     label_prefix="terminal"
+    # )
 
     # Process additional posts for non-terminal posts
     print("=== Processing additional posts for non-terminal users ===")
