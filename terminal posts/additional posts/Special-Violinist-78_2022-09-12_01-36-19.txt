@@ -1,0 +1,10 @@
+Username: Special-Violinist-78
+Date (UTC): 2022-09-12_01-36-19
+Title: I don't want addressable LEDs for my back deck?
+URL: https://www.reddit.com/r/WLED/comments/xbztkv/i_dont_want_addressable_leds_for_my_back_deck/
+Content:
+I just finished putting the top rail on my deck railing (the piece you lean on or put your drink on) it's about 25m/80ft. I routered a channel on the underside to receive some IP-rated led strips and am torn between addressable vs non.
+
+I have addressable in the kids' rooms and they are gorgeous but I don't think most of the effects will show up in ambiance /underlight. Also I won't around too much to troubleshoot for the family so extra layers of complexity vs it just works would be a plus. OR the effects would be awesome and WLED is so stable I'd d be silly not to go addressable.
+
+Thoughts?

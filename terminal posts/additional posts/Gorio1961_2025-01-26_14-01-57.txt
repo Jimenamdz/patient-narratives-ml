@@ -1,0 +1,7 @@
+Username: Gorio1961
+Date (UTC): 2025-01-26_14-01-57
+Title: Updating Gravity
+URL: https://www.reddit.com/r/pihole/comments/1iaf9ms/updating_gravity/
+Content:
+How often do you guys update Gravity?  Do you have favorite Adlists?  My current list contains 3.8 million 
+domains.

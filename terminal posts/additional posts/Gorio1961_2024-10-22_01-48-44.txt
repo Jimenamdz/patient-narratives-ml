@@ -1,0 +1,6 @@
+Username: Gorio1961
+Date (UTC): 2024-10-22_01-48-44
+Title: REcent interface changes?  Random?
+URL: https://www.reddit.com/r/waze/comments/1g96wmf/recent_interface_changes_random/
+Content:
+First, the "notifications for hazards" were speechless and were replaced with a beep sound.  The default voice is gone, and I was forced to pick another one. It's very infuriating.

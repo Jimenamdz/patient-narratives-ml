@@ -1,0 +1,8 @@
+Username: SpicyWasabi_
+Date (UTC): 2022-07-19_04-50-37
+Title: Is location updating frozen for anyone else?
+URL: https://www.reddit.com/r/SLOWLYapp/comments/w2k1ze/is_location_updating_frozen_for_anyone_else/
+Content:
+I was trying to collect some new stamps today and I noticed I can no longer update my location as it doesn’t let me. I know there was a topic posted a month back about an update where Slowly no longer lets you change your location but despite not updating my app I’m only having the problem now. Anyone else experiencing this?
+
+EDIT: It’s been resolved! Must’ve just been an app glitch

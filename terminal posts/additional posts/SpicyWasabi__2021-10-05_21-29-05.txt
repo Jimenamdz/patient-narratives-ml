@@ -1,0 +1,8 @@
+Username: SpicyWasabi_
+Date (UTC): 2021-10-05_21-29-05
+Title: Receiving a letter from a country I’ve excluded
+URL: https://www.reddit.com/r/SLOWLYapp/comments/q262g6/receiving_a_letter_from_a_country_ive_excluded/
+Content:
+I’m sure everyone knows that in Slowly you’re able to exclude up to 5 countries (10 if you’re PLUS) for personal preference or whatever. I personally excluded about 7 that I receive lots of spam and annoying letters from so I just prefer it that way. Anyways, I look on slowly and it seems that I’m receiving two letters, both from a country that I’ve excluded a long time ago. It’s not like I excluded their country after they sent me the letter, it’s been a while since I first excluded them. How is this possible? Did they somehow spoof their location just to send me a letter or something? Has anyone else experienced this?
+
+UPDATE: I received the letter today and with the advice of another user, looked at the top to see it was sent from the location I had excluded meaning that they somehow bypassed my filter without VPN or anything like that. I emailed Slowly and they said it must’ve been a glitch, but that’s all I’ve got 🤷🏻‍♀️

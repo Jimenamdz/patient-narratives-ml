@@ -1,0 +1,6 @@
+Username: someRandomUser636
+Date (UTC): 2024-12-31_18-48-11
+Title: Skr mini e3 v3: 1 driver and 2 ports for Z axis... why?
+URL: https://www.reddit.com/r/BIGTREETECH/comments/1hql892/skr_mini_e3_v3_1_driver_and_2_ports_for_z_axis_why/
+Content:
+I recently got the Skr mini e3 v3 for my ender 3 v2 and while working on it I found a video talking about the G34 command for z alignment and since I have dual Z I thought that was the purpose of the 2 ports for Z but no... single as I confirmed... the board have a single driver for Z... so... can someone explain the purpose for 2 ports for Z axis in this board? Now Im still on the splitter cable feeding both z stepper motors..

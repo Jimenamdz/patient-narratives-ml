@@ -1,0 +1,20 @@
+Username: someRandomUser636
+Date (UTC): 2024-12-23_16-26-35
+Title: Weird noise on y axis with linear rails at 300mms while testing
+URL: https://www.reddit.com/r/klippers/comments/1hkrcyj/weird_noise_on_y_axis_with_linear_rails_at_300mms/
+Content:
+I added rails to my already modded ender 3 v2... and while I was doing the ellis speed test at 300mms I notice this weird noise on the Y axis... I check that is alligned and lubricated... any idea what could it be?..
+
+for context I have accel set to 8000 for now.. but even with the noise... the accuracy is good... It can go up to 500 but the noise is teh worst!
+
+https://reddit.com/link/1hkrcyj/video/zut0mhevjm8e1/player
+
+UPDATE: I went full steam ahead and added the BIGTREETECH V3 board and set this to 1, now while I get a small BUZZ ... I can go 500mms
+
+    [tmc2209 stepper_y]
+    uart_pin: PC11
+    tx_pin: PC10
+    uart_address: 2
+    run_current: 0.580
+    hold_current: 0.500
+    stealthchop_threshold: 1 <-------

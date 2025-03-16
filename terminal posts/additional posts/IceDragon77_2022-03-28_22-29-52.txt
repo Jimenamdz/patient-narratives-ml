@@ -1,0 +1,8 @@
+Username: IceDragon77
+Date (UTC): 2022-03-28_22-29-52
+Title: Anyone else having issues with rubber banding in multiplayer?
+URL: https://www.reddit.com/r/Wonderlands/comments/tql42q/anyone_else_having_issues_with_rubber_banding_in/
+Content:
+My friends say everything is fine when they play with each other, but when I join them, or they join me everyone starts rubber banding during combat.
+
+I thought it might be an issue with my connection but my Xbox says I have an open NAT and I ran a speed test and everything looked fine.

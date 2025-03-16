@@ -1,0 +1,8 @@
+Username: Surreal4D
+Date (UTC): 2023-12-19_18-54-06
+Title: Frequency Distortion
+URL: https://www.reddit.com/r/steelseries/comments/18m9dhh/frequency_distortion/
+Content:
+Hello all! I recently purchased the Arctic Nova Pro wireless headset for my PC. Beyond happy with this product in terms of audio quality and comfortability. However, the last few days I have noticed an uptick in Audio distortion while playing games, after diving deep into reasons that it could be I’ve read that the 2.4GHz frequency could be getting interrupted with your phone being close by, modem router being in the same room (which it is) and if this is the case to go within your router settings and disable 2.4GHz. However the only inconvenience with that is my Samsung TVs are wirelessly connected via 2.4G WiFi & along with my houses security system, thermostat etc. so you can see my issue. 
+
+Has anyone else found a resolution or a way around this.

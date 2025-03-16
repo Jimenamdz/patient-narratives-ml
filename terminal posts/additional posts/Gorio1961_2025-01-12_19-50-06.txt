@@ -1,0 +1,6 @@
+Username: Gorio1961
+Date (UTC): 2025-01-12_19-50-06
+Title: iOS ChatGPT 
+URL: https://www.reddit.com/r/ChatGPT/comments/1hzv6f6/ios_chatgpt/
+Content:
+It would be nice if the iOS ChatGTP App would immediately start listening instead of having to prompt it before speaking.  The voice-enabled feature is such a nice feature when I am on a road trip by myself and need a distraction to break the monotony of the road.

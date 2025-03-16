@@ -1,0 +1,8 @@
+Username: jdizzle161
+Date (UTC): 2022-12-01_20-23-47
+Title: CarPlay Freezing with Music
+URL: https://www.reddit.com/r/applehelp/comments/z9ym6c/carplay_freezing_with_music/
+Content:
+I have a 14 pro Max, and I am connecting to a 2020 Acura TLX via a lighting to USB cable.  The issue I am having is that Music, via CarPlay, is freezing.  I will skip two or three songs, and it will lock into one on the main screen and not move on.  I can still skip songs for a bit longer using the controls on the steering wheel, or the touch screen panel, but after a bit, it will just shut down Music.  It also freezes the app on my phone.  I have updated to the newest iOS, as well as hard restarted the phone numerous times, and did a factory reset on the cars stereo system.  It is still doing it.  I am going to try a different cable on my way home tonight.  
+
+Has anyone else run into this?

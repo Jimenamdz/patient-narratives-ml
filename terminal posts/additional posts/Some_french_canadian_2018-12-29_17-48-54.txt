@@ -1,0 +1,6 @@
+Username: Some_french_canadian
+Date (UTC): 2018-12-29_17-48-54
+Title: [PubQ] : I wrote a book about cancer in the format of an illustrated children fairy tale book and I have a question about fonts
+URL: https://www.reddit.com/r/PubTips/comments/aan7hy/pubq_i_wrote_a_book_about_cancer_in_the_format_of/
+Content:
+Basically I am using Photoshop to fit the text in the pages, but I'm very afraid of using a font and then discover it is protected by copyright and have its maker sue me. How could I possibly figure out if a font even advertised as free of copyright really is free to use as I see fit?

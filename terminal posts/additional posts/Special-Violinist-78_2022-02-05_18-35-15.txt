@@ -1,0 +1,6 @@
+Username: Special-Violinist-78
+Date (UTC): 2022-02-05_18-35-15
+Title: Says she's playing radio, doesn't play anything
+URL: https://www.reddit.com/r/alexa/comments/sldiex/says_shes_playing_radio_doesnt_play_anything/
+Content:
+When I say "Play (band name) radio" she replies "Playing (band name) radio on Spotify" and then doesn't play anything. I repeat and same outcome. It feels like it happens 50% of the time so Super annoying, but probably more like 20%. Any ideas?

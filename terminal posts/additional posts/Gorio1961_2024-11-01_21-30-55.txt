@@ -1,0 +1,6 @@
+Username: Gorio1961
+Date (UTC): 2024-11-01_21-30-55
+Title: Subtle features changing
+URL: https://www.reddit.com/r/waze/comments/1ghgh9r/subtle_features_changing/
+Content:
+Normally, when features in an app cease to exist or stop functioning as advertised, there’s an indication that an update might be due. In the case of Waze, as a regular user, how often should I be checking for updates?

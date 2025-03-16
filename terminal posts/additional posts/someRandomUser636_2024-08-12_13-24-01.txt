@@ -1,0 +1,13 @@
+Username: someRandomUser636
+Date (UTC): 2024-08-12_13-24-01
+Title: Adding lineal rails, will make the printer quiter?
+URL: https://www.reddit.com/r/ender3v2/comments/1eqdmyr/adding_lineal_rails_will_make_the_printer_quiter/
+Content:
+I lready have some mods on the printer as you can see on the picture below, and I undersdtand that Lineal Rails will not increase quality much (I invite anyone who have LR to comment on that) but im looking to know if I can improve noise reduction overall (alreay did with the noctua fan upgrade)
+
+[BTW those 5015 I have them set to 50&#37;\/100&#37; \(8 and 100 second layer time repectebly\) for PLA and 10&#37;\/30&#37; for PETG on OrcaSlicer](https://preview.redd.it/75vedakqh8id1.jpg?width=1346&format=pjpg&auto=webp&s=c81b8375390fa80676d0e5e0b73f322ac6ffae4f)
+
+Anyone who have lineal rails can comment on this? I usully print models with details for later paint.. worth the upgrade?
+
+  
+Thanks!

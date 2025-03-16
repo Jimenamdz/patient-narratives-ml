@@ -1,0 +1,20 @@
+Username: Gorio1961
+Date (UTC): 2023-12-23_21-28-24
+Title: Which one should I buy?
+URL: https://www.reddit.com/r/AcerNitro/comments/18pfipc/which_one_should_i_buy/
+Content:
+**Nitro 17 AMD**   
+AMD Ryzen™ 9 7940HS processor Octa-core 4 GHz  
+NVIDIA® GeForce RTX™ 4070 with 8 GB dedicated memory  
+17.3" QHD (2560 x 1440) 16:9 IPS 165 Hz  
+32 GB, DDR5 SDRAM  
+1 TB SSD
+
+**Nitro 17 Intel**  
+Intel® Core™ i7-13700HX processor Hexadeca-core 2.10 GHz  
+NVIDIA® GeForce RTX™ 4050 with 6 GB dedicated memory  
+17.3" Full HD (1920 x 1080) 16:9 IPS 165 Hz  
+16 GB, DDR5 SDRAM  
+512 GB SSD
+
+&#x200B;

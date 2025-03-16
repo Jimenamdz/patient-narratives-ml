@@ -1,0 +1,6 @@
+Username: someRandomUser636
+Date (UTC): 2024-12-14_16-16-44
+Title: MFA stopped working out of the blue
+URL: https://www.reddit.com/r/etrade/comments/1he69i5/mfa_stopped_working_out_of_the_blue/
+Content:
+logged in this morning... zero problems... try to to a wire, but it complains about the code... I tried to re log, and now is not taking it... Has anyone had this issue before? I did not get any email about any setting changed so Im not worried about that ... but its sucks!

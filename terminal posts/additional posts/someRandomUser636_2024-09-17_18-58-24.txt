@@ -1,0 +1,53 @@
+Username: someRandomUser636
+Date (UTC): 2024-09-17_18-58-24
+Title: Adaptive mesh not working?
+URL: https://www.reddit.com/r/klippers/comments/1fj7kfz/adaptive_mesh_not_working/
+Content:
+It proves the bed before the print... I can confirm it save it.. some how I see the left side is not ok...
+
+https://preview.redd.it/xzx8j2zi2fpd1.jpg?width=1995&format=pjpg&auto=webp&s=ce49711a9a7b5c574e01cca85b41d712b5014830
+
+Start print macro:
+
+    PRINT_START EXTRUDER=[nozzle_temperature_initial_layer] BED=[bed_temperature_initial_layer_single]
+
+Klipper version: **v0.12.0-290-g14a83103**
+
+the macro itself:
+
+    [gcode_macro PRINT_START]
+    gcode:
+        SKEW_PROFILE LOAD=CaliFlower
+        SET_SKEW CLEAR=1
+        M118 starting process
+        G28 
+        # Home the printer
+        M118 150 
+        # pre heat nozzle to 150C
+        {% set BED = params.BED|float %}
+        {% set EXTRUDER = params.EXTRUDER |float %}
+        G90 
+        # Use absolute coordinates
+        SET_GCODE_OFFSET Z=0.0 
+        # Reset the G-Code Z offset (adjust Z offset if needed)
+        M118 heating bed to {BED}
+        M190 S{BED} 
+        # Wait for bed to reach temperature
+        #M109 S150 # pre heat nozzle to 150C
+        M118 Calibrating mesh
+        BED_MESH_CALIBRATE ADAPTIVE=1 
+        #Create mesh using KAMP (updated to native support)
+        M118 heating nozzle to {EXTRUDER}
+        M109 S{EXTRUDER} 
+        # Set and wait for nozzle to reach temperature
+        M118 purging
+        #VORON_PURGE
+        #LINE_PURGE # Purge filament before start print
+        #PRUSA_PURGE
+        CURA_PURGE
+        #CLEAN_NOZZLE
+        M118 Print start
+
+Any pointer?
+
+thanks.

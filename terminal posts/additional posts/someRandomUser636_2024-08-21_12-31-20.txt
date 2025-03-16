@@ -1,0 +1,12 @@
+Username: someRandomUser636
+Date (UTC): 2024-08-21_12-31-20
+Title: Edenor - precio por kWh - 99 "con" o 99 "mil"?
+URL: https://www.reddit.com/r/AskArgentina/comments/1exoe3g/edenor_precio_por_kwh_99_con_o_99_mil/
+Content:
+parece una boludez... pero no se interpretar la coma y el punto cuando ponen cifras... estaba calculando el costo de luz y veo que en el [boletin oficial](https://www.boletinoficial.gob.ar/detalleAviso/primera/311720/20240805#:~:text=%2D%20Informar%20a%20EDENOR%20S.A.%20que,asciende%20a%2099%2C403%20%24%2FkWh) dice:
+
+"...de esta forma, la tarifa media de la distribuidora se ubica en el orden de los  99,403 $/kWh"
+
+son "99 mil, 403" o "99 pesos con 403 centavos"?
+
+perdon de antemano por la preguntonta...

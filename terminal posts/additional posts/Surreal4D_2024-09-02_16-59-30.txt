@@ -1,0 +1,6 @@
+Username: Surreal4D
+Date (UTC): 2024-09-02_16-59-30
+Title: Clipping hours of gameplay instead of my set 2 minute time select
+URL: https://www.reddit.com/r/MedalTV/comments/1f7bsv5/clipping_hours_of_gameplay_instead_of_my_set_2/
+Content:
+Hello, recently I been having issues with medal where I go to clip something and I ensured I have 2 minutes selected within the software however going to look back on the clips they all clip hours of gameplay, causing storage to increase. I verified its selected to two minutes but has anyone else encountered this and how to fix? 

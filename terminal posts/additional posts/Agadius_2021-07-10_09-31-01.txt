@@ -1,0 +1,8 @@
+Username: Agadius
+Date (UTC): 2021-07-10_09-31-01
+Title: Feature request: add search capability to “Saved”
+URL: https://www.reddit.com/r/baconreader/comments/ohfmds/feature_request_add_search_capability_to_saved/
+Content:
+Hi, I have a feature request that I find strange that hasn’t been suggested before (I tried searching). Could you add search capabilities to saved posts? I have years of saved posts and I’m starting to have difficulty finding stuff that I know I saved 2 years ago. 
+
+Thanks for making a great reader!

@@ -1,0 +1,6 @@
+Username: someRandomUser636
+Date (UTC): 2024-11-16_14-45-28
+Title: Lineal rail - missing bearing balls... is a problem?
+URL: https://www.reddit.com/r/ender3v2/comments/1gsoqkz/lineal_rail_missing_bearing_balls_is_a_problem/
+Content:
+I recently got the black knight lineal rails kit for my v2... Started with the Y axis and during the process, the square part fell off the rail... after fully assembled (just Y axis for now) and done some TEST\_SPEED tests (10K accel @ 500 ms) with great results... I notice the work area and found 6 small bearing balls from the rail... I really dont want to start all over again... I did not notice anything wrong during the speed tests and honestly when I was putting pack the rail I did not see any mayor portion of missing balls... is this a problem? do I "NEED" to fix that?

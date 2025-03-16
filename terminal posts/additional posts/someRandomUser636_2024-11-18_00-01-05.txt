@@ -1,0 +1,11 @@
+Username: someRandomUser636
+Date (UTC): 2024-11-18_00-01-05
+Title: Problems finding direct drive mount for lineal rails + BMG + minimus hotend
+URL: https://www.reddit.com/r/ender3v2/comments/1gtri6j/problems_finding_direct_drive_mount_for_lineal/
+Content:
+https://preview.redd.it/z630d86vvj1e1.png?width=2332&format=png&auto=webp&s=95ae16bd159d49928525fc5f1cde5beadb640d18
+
+I recently upgraded to lineal rails but I notice that I dont have a proper direct drive mount for this one... I have the minimus cooling part, the BMG dual drive extruder and I added a mount for the DD that was great but cant find any proper mount now... I will have to go back to bowden until I can find one... if anyone know if any model I can use I would appreciate the pointer.
+
+  
+Thanks!

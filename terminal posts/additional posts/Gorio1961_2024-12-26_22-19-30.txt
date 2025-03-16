@@ -1,0 +1,6 @@
+Username: Gorio1961
+Date (UTC): 2024-12-26_22-19-30
+Title: Chat history versus Model Context Set
+URL: https://www.reddit.com/r/ChatGPT/comments/1hmznj2/chat_history_versus_model_context_set/
+Content:
+When ChatGPT came back to life, my chat history was gone. I asked what had happened and was informed that chat history is still available but contained in the Model Context Set. I asked ChatGPT to display the current Model Context Set; it read familiar but didn't include my entire chat history. Interesting.
