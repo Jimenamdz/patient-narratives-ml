@@ -5,112 +5,76 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 def parse_after_keyword(text_value, keyword):
-    """
-    Returns everything AFTER the first occurrence of `keyword:` in `text_value`.
-    If not found, returns the original text_value unchanged.
-    Matching is case-insensitive.
-    """
-    if not isinstance(text_value, str):
-        text_value = str(text_value)
-    # Build a regex like:  CONTENT:(.*) or URL:(.*) case-insensitive
     pattern = re.compile(rf"{keyword}:(.*)", re.IGNORECASE | re.DOTALL)
-    match = pattern.search(text_value)
-    if match:
-        return match.group(1).strip()
-    else:
-        return text_value
+    match = pattern.search(str(text_value))
+    return match.group(1).strip() if match else text_value
 
 def strip_tumblr_headers(text_value):
-    """
-    Removes lines that start with Blog:, Timestamp:, Tags:, or URL: (case-insensitive).
-    Leaves everything else intact.
-    """
     lines = text_value.splitlines()
-    stripped_lines = []
-    for line in lines:
-        # If line begins with "Blog:", "Timestamp:", "Tags:", or "URL:", skip it
-        if re.match(r"^\s*(Blog:|Timestamp:|Tags:|URL:)", line, flags=re.IGNORECASE):
-            continue
-        stripped_lines.append(line)
-    # Join them back with a space or newline
+    stripped_lines = [
+        line for line in lines
+        if not re.match(r"^\s*(Blog:|Timestamp:|Tags:|URL:)", line, flags=re.IGNORECASE)
+    ]
     return " ".join(stripped_lines)
 
 def parse_and_extract(text_value):
-    """
-    1. Try extracting everything AFTER 'Content:' (for Reddit).
-    2. If 'Content:' not found, try extracting everything AFTER 'URL:' (for Tumblr).
-    3. Remove lines that start with Blog:, Timestamp:, Tags:, URL: 
-       (in case there's leftover Tumblr headers).
-    """
-    # First try 'Content:'
     parsed = parse_after_keyword(text_value, "Content")
-    # If it didn't change, there's no 'Content:' => check 'URL:' next
     if parsed == text_value:
         parsed = parse_after_keyword(text_value, "URL")
-    # Remove lines beginning with Blog:, Timestamp:, Tags:, or URL:
     parsed = strip_tumblr_headers(parsed)
     return parsed
 
+def remove_emojis(text):
+    emoji_pattern = re.compile(
+        "["
+        "\U0001F600-\U0001F64F"
+        "\U0001F300-\U0001F5FF"
+        "\U0001F680-\U0001F6FF"
+        "\U0001F1E0-\U0001F1FF"
+        "\U00002600-\U000026FF"
+        "\U00002700-\U000027BF"
+        "\U000024C2-\U0001F251"
+        "\U0001f926-\U0001f937"
+        "\U00010000-\U0010ffff"
+        "\u2640-\u2642"
+        "\u2600-\u2B55"
+        "\u200d"
+        "\u23cf"
+        "\u23e9"
+        "\u231a"
+        "\ufe0f"
+        "\u3030"
+        "]+",
+        flags=re.UNICODE,
+    )
+    return emoji_pattern.sub(r'', text)
+
 def clean_text(raw_text):
-    """
-    Cleans the extracted text by:
-    - Removing HTML (BeautifulSoup)
-    - Removing URLs, placeholders [icon:...], @usernames, #hashtags
-    - Removing emails, phone numbers
-    - Merging excessive punctuation
-    - Normalizing whitespace
-    """
-    if not isinstance(raw_text, str):
-        raw_text = str(raw_text)
-
-    # Remove HTML tags
-    soup = BeautifulSoup(raw_text, "html.parser")
+    soup = BeautifulSoup(str(raw_text), "html.parser")
     text = soup.get_text(separator=" ")
-
-    # Remove URLs (http, https, www)
     text = re.sub(r"https?://\S+|www\.\S+", "", text)
-
-    # Remove anything in square brackets [icon: ...], etc.
     text = re.sub(r"\[[^\]]*\]", "", text)
-
-    # Remove @usernames, #hashtags
     text = re.sub(r"@\w+", "", text)
-    text = re.sub(r"#\w+", "", text)
-
-    # Remove emails
-    text = re.sub(r"[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}", "", text)
-
-    # Remove phone numbers (+ optional brackets, hyphens, spaces)
+    text = re.sub(r"#[\w]+", "", text)
+    text = re.sub(r"[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,}", "", text)
     text = re.sub(r"\+?\d[\d\-\(\) ]+\d", "", text)
-
-    # (Optional) remove leftover HTML tags if any remain
     text = re.sub(r"<[^>]+>", "", text)
-
-    # Merge or remove repeated punctuation, e.g. "!!!" => "!"
-    text = re.sub(r"[^\w\s]+(?=[^\w\s]+)", "", text)
-    text = re.sub(r"[^\w\s]{2,}", "", text)
-
-    # Normalize whitespace
+    text = remove_emojis(text)
+    text = re.sub(r"[^\w\s]", "", text)
     text = re.sub(r"\s+", " ", text).strip()
-
     return text
 
+def valid_text(text):
+    words = [word for word in text.split() if len(word) >= 3]
+    return len(words) >= 5
+
 def main():
-    # Load your CSV
     df = pd.read_csv("patient_test_data_with_source.csv", encoding="utf-8")
-
-    # 1) Extract the real post content (after 'Content:' or 'URL:', removing Tumblr headers)
     df["text"] = df["text"].apply(parse_and_extract)
-
-    # 2) Clean the extracted text
     df["text"] = df["text"].apply(clean_text)
-
-    # 3) Drop duplicates based on the final cleaned 'text'
+    df = df[df["text"].apply(valid_text)]
     df.drop_duplicates(subset="text", keep="first", inplace=True)
-
-    # 4) Save the result as a new CSV, preserving all columns
     df.to_csv("cleaned_patient_data.csv", index=False, encoding="utf-8")
-
     print("Cleaning complete. Results saved to cleaned_patient_data.csv")
 
 if __name__ == "__main__":
