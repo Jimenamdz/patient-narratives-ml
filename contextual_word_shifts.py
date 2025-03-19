@@ -7,38 +7,50 @@ import umap
 import nltk
 from nltk.tokenize import word_tokenize
 from sklearn.metrics.pairwise import cosine_similarity
-from transformers import DistilBertTokenizer, DistilBertModel
+from transformers import DistilBertTokenizerFast, DistilBertModel
+
+# Load DistilBERT tokenizer & model
+tokenizer = DistilBertTokenizerFast.from_pretrained("distilbert-base-uncased")
+model = DistilBertModel.from_pretrained("distilbert-base-uncased")
 
 # Download NLTK tokenizer if not already available
 nltk.download('punkt')
 
-# Load DistilBERT tokenizer & model
-tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
-model = DistilBertModel.from_pretrained("distilbert-base-uncased")
-
 def get_word_embedding(word, context):
-    """Extract DistilBERT word embedding from a given context sentence."""
     if not word or not context:
-        return None  # Instead of zero vector, return None
+        return None
     
-    inputs = tokenizer(context, return_tensors="pt", truncation=True, padding=True, max_length=128)
+    inputs = tokenizer(context, return_tensors="pt", truncation=True, padding=True, max_length=128, return_offsets_mapping=True)
+    
     with torch.no_grad():
-        outputs = model(**inputs)
+        outputs = model(**{k: v for k, v in inputs.items() if k != "offset_mapping"})
 
-    tokenized_text = tokenizer.tokenize(context)
+    tokens = tokenizer.convert_ids_to_tokens(inputs['input_ids'][0])
+    offset_mapping = inputs['offset_mapping'][0]
 
-    # Find the word's token index (if present)
-    try:
-        word_index = tokenized_text.index(word.lower())  # Ensure lowercase match
-        return outputs.last_hidden_state[:, word_index, :].numpy().flatten()
-    except ValueError:
-        return None  # If the word isn't in the sentence, return None
+    word = word.lower()
+    word_positions = []
+
+    for idx, (token, (start, end)) in enumerate(zip(tokens, offset_mapping)):
+        token_clean = token.replace("##", "")
+        token_text = context[start:end].lower()
+        if word in token_text or token_clean == word:
+            word_positions.append(idx)
+
+    if not word_positions:
+        return None  # Word not found after tokenization/truncation
+
+    # Average embeddings for all sub-tokens of the word
+    embeddings = outputs.last_hidden_state[0, word_positions, :].numpy()
+    word_embedding = np.mean(embeddings, axis=0)
+    
+    return word_embedding
 
 def load_data(file_path):
-    """Load dataset and split into terminal vs. non-terminal patient texts."""
+    """Load  dataset and split into terminal vs. non-terminal patient texts."""
     df = pd.read_csv(file_path)
-    terminal_texts = df[df["group"] == "terminal"]["text"].dropna().tolist()
-    non_terminal_texts = df[df["group"] == "non-terminal"]["text"].dropna().tolist()
+    terminal_texts = df[df.iloc[:,0] == "terminal"].iloc[:,1].dropna().tolist()
+    non_terminal_texts = df[df.iloc[:,0] == "non-terminal"].iloc[:,1].dropna().tolist()
     return terminal_texts, non_terminal_texts
 
 def compute_word_shifts(key_words, terminal_texts, non_terminal_texts):
@@ -140,7 +152,7 @@ def visualize_word_shifts(avg_terminal_embeddings, avg_non_terminal_embeddings):
     plt.show()
 
 if __name__ == "__main__":
-    file_path = "patient_test_data.csv"  # Update when real data is ready
+    file_path = "cleaned_patient_data.csv"
     key_words = ["hope", "treatment", "pain", "future", "scared", "relief"]
 
     try:

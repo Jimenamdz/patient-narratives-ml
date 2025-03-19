@@ -40,50 +40,25 @@ def compute_similarity(terminal_texts, non_terminal_texts):
     return similarity_matrix
 
 def load_data(file_path):
-    """Load data from a CSV or JSON file."""
-    if file_path.endswith(".csv"):
-        df = pd.read_csv(file_path)
-    elif file_path.endswith(".json"):
-        df = pd.read_json(file_path)
-    else:
-        raise ValueError("Unsupported file format. Use CSV or JSON.")
+    """Load data from cleaned CSV file."""
+    df = pd.read_csv(file_path)
 
-    # Expecting columns: 'text' and 'group' (where group is 'terminal' or 'non-terminal')
-    terminal_texts = df[df['group'] == 'terminal']['text'].dropna().tolist()
-    non_terminal_texts = df[df['group'] == 'non-terminal']['text'].dropna().tolist()
+    df.columns = ['group', 'text', 'source']
+
+    terminal_texts = df[df['group'].str.lower() == 'terminal']['text'].dropna().tolist()
+    non_terminal_texts = df[df['group'].str.lower() == 'non-terminal']['text'].dropna().tolist()
 
     return terminal_texts, non_terminal_texts
 
-def visualize_similarity(similarity_matrix):
-    """Plot the cosine similarity matrix as a heatmap with improved visualization."""
-    plt.figure(figsize=(10, 8))  # Increase figure size for better readability
-    
-    # Set a better color range to highlight differences
-    vmin, vmax = 0.85, 1.0  # Adjust color scale to emphasize meaningful differences
-    
-    ax = sns.heatmap(similarity_matrix, 
-                      annot=False,  # Remove numbers to declutter the heatmap
-                      cmap="coolwarm", 
-                      fmt=".2f", 
-                      linewidths=0.5,  # Add gridlines for separation
-                      vmin=vmin, vmax=vmax)  # Define color scale
-    
-    plt.xlabel("Non-Terminal Posts")
-    plt.ylabel("Terminal Posts")
-    plt.title("Cosine Similarity Between Terminal and Non-Terminal Patient Texts")
-    plt.show()
-
 if __name__ == "__main__":
-    # Example usage with a real dataset
-    file_path = "patient_test_data.csv"  # Change to your actual data file
+    file_path = "cleaned_patient_data.csv" 
     try:
         terminal_texts, non_terminal_texts = load_data(file_path)
         similarity_matrix = compute_similarity(terminal_texts, non_terminal_texts)
-        
+
         print("Cosine Similarity Matrix:")
         print(similarity_matrix)
-        
-        visualize_similarity(similarity_matrix)  # Display heatmap
+
+        visualize_similarity(similarity_matrix)
     except Exception as e:
         print(f"Error: {e}")
-

@@ -22,11 +22,10 @@ def get_sentence_embedding(text):
     return outputs.last_hidden_state[:, 0, :].numpy().flatten()  # Extract [CLS] representation
 
 def load_data(file_path):
-    """Load dataset from CSV file."""
+    """Load real dataset and split into terminal vs. non-terminal patient texts."""
     df = pd.read_csv(file_path)
-    terminal_texts = df[df["group"] == "terminal"]["text"].dropna().tolist()
-    non_terminal_texts = df[df["group"] == "non-terminal"]["text"].dropna().tolist()
-    
+    terminal_texts = df[df.iloc[:,0] == "terminal"].iloc[:,1].dropna().tolist()
+    non_terminal_texts = df[df.iloc[:,0] == "non-terminal"].iloc[:,1].dropna().tolist()
     return terminal_texts, non_terminal_texts
 
 def generate_embeddings(text_list):
@@ -62,7 +61,7 @@ def visualize_clusters(terminal_embeddings, non_terminal_embeddings):
     plt.show()
 
 if __name__ == "__main__":
-    file_path = "patient_test_data.csv"  # Update to real data when ready
+    file_path = "cleaned_patient_data.csv" 
 
     try:
         # Load & embed data
@@ -75,4 +74,3 @@ if __name__ == "__main__":
 
     except Exception as e:
         print(f"Error: {e}")
-

@@ -25,22 +25,11 @@ def get_sentence_embedding(text):
         return np.zeros((768,))  # Fallback to zero vector
 
 def load_data(file_path):
-    """Load dataset and extract terminal & non-terminal patient texts."""
-    try:
-        df = pd.read_csv(file_path)
-        if "group" not in df.columns or "text" not in df.columns:
-            raise ValueError("CSV file must contain 'group' and 'text' columns.")
-        
-        terminal_texts = df[df["group"] == "terminal"]["text"].dropna().tolist()
-        non_terminal_texts = df[df["group"] == "non-terminal"]["text"].dropna().tolist()
-        
-        if not terminal_texts or not non_terminal_texts:
-            raise ValueError("Dataset contains empty text groups.")
-        
-        return terminal_texts, non_terminal_texts
-    except Exception as e:
-        print(f"Error loading data: {e}")
-        return [], []
+    """Load dataset and split into terminal vs. non-terminal patient texts."""
+    df = pd.read_csv(file_path)
+    terminal_texts = df[df.iloc[:,0] == "terminal"].iloc[:,1].dropna().tolist()
+    non_terminal_texts = df[df.iloc[:,0] == "non-terminal"].iloc[:,1].dropna().tolist()
+    return terminal_texts, non_terminal_texts
 
 def compute_embeddings(texts):
     """Compute embeddings for all texts and return as an array."""
@@ -102,7 +91,7 @@ def plot_permutation_distribution(permuted_distances, observed_distance, p_value
     plt.show()
 
 if __name__ == "__main__":
-    file_path = "patient_test_data.csv"  # Update with real data when ready
+    file_path = "cleaned_patient_data.csv" 
     
     try:
         # Load dataset
