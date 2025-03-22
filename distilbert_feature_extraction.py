@@ -58,7 +58,5 @@ if __name__ == "__main__":
 
         print("Cosine Similarity Matrix:")
         print(similarity_matrix)
-
-        visualize_similarity(similarity_matrix)
     except Exception as e:
         print(f"Error: {e}")

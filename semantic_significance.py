@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.spatial.distance import cosine
 from transformers import DistilBertTokenizer, DistilBertModel
+from sklearn.decomposition import PCA
 
 # Load DistilBERT tokenizer & model
 tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
@@ -59,7 +60,7 @@ def permutation_test(terminal_embeddings, non_terminal_embeddings, n_permutation
             perm_non_terminal = combined[split_idx:].mean(axis=0)
             permuted_distances.append(cosine(perm_terminal, perm_non_terminal))
 
-        p_value = np.sum(np.array(permuted_distances) >= observed_distance) / n_permutations
+        p_value = (np.sum(np.array(permuted_distances) >= observed_distance) + 1) / (n_permutations + 1)
         return observed_distance, p_value, permuted_distances
     except Exception as e:
         print(f"Error during permutation test: {e}")
@@ -104,6 +105,12 @@ if __name__ == "__main__":
             terminal_embeddings = compute_embeddings(terminal_texts)
             non_terminal_embeddings = compute_embeddings(non_terminal_texts)
 
+            # --- Extra checks ---
+            print(f"# Terminal Texts: {len(terminal_texts)}")
+            print(f"# Non-Terminal Texts: {len(non_terminal_texts)}")
+            print("Avg norm terminal embeddings:", np.mean(np.linalg.norm(terminal_embeddings, axis=1)))
+            print("Avg norm non-terminal embeddings:", np.mean(np.linalg.norm(non_terminal_embeddings, axis=1)))
+
             # Check embedding shapes
             print(f"Terminal Embeddings Shape: {terminal_embeddings.shape}")
             print(f"Non-Terminal Embeddings Shape: {non_terminal_embeddings.shape}")
@@ -116,9 +123,28 @@ if __name__ == "__main__":
             # Print results
             print(f"Observed Cosine Distance: {observed_distance:.4f}")
             print(f"P-value from Permutation Test: {p_value:.4f}")
+            print(f"Mean permuted distance: {np.mean(permuted_distances):.4f}")
+            print(f"95th percentile: {np.percentile(permuted_distances, 95):.4f}")
+            print(f"Max permuted distance: {np.max(permuted_distances):.4f}")
 
             # Plot permutation test results with P-value
             plot_permutation_distribution(permuted_distances, observed_distance, p_value)
+
+            # PCA visualization
+            combined_embeddings = np.vstack([terminal_embeddings, non_terminal_embeddings])
+            labels = ['terminal'] * len(terminal_embeddings) + ['non-terminal'] * len(non_terminal_embeddings)
+
+            pca = PCA(n_components=2)
+            proj = pca.fit_transform(combined_embeddings)
+
+            plt.figure(figsize=(8, 6))
+            plt.scatter(proj[:len(terminal_embeddings), 0], proj[:len(terminal_embeddings), 1],
+                        alpha=0.5, label="Terminal")
+            plt.scatter(proj[len(terminal_embeddings):, 0], proj[len(terminal_embeddings):, 1],
+                        alpha=0.5, label="Non-Terminal")
+            plt.title("PCA of Sentence Embeddings")
+            plt.legend()
+            plt.show()
 
     except Exception as e:
         print(f"Unexpected error: {e}")
