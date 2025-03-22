@@ -1,76 +1,115 @@
 import torch
+import random
 import umap
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from transformers import DistilBertTokenizer, DistilBertModel
+from tqdm import tqdm
 
-# Load DistilBERT tokenizer & model
+# Set random seed for reproducibility
+seed = 42
+torch.manual_seed(seed)
+np.random.seed(seed)
+random.seed(seed)
+
+if torch.cuda.is_available():
+    torch.cuda.manual_seed_all(seed)
+
+# Ensure deterministic behavior
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+
+# Check GPU availability
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+# Constants (easily adjustable)
+BATCH_SIZE = 32
+MAX_LENGTH = 128
+FILE_PATH = "cleaned_patient_data.csv"
+
+# Initialize tokenizer and model
 tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
-model = DistilBertModel.from_pretrained("distilbert-base-uncased")
+model = DistilBertModel.from_pretrained("distilbert-base-uncased").to(device)
 
-def get_sentence_embedding(text):
-    """Convert a sentence into a DistilBERT embedding."""
-    if not text or not isinstance(text, str):  # Handle empty/non-string values
-        return np.zeros((768,))
-    
-    inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=128)
-    with torch.no_grad():
-        outputs = model(**inputs)
-    
-    return outputs.last_hidden_state[:, 0, :].numpy().flatten()  # Extract [CLS] representation
+
+def get_sentence_embeddings(texts, batch_size=BATCH_SIZE):
+    """Compute sentence embeddings in batches for efficiency."""
+    embeddings = []
+    model.eval()
+
+    for i in tqdm(range(0, len(texts), batch_size), desc="Embedding sentences"):
+        batch_texts = texts[i:i + batch_size]
+        inputs = tokenizer(
+            batch_texts, return_tensors="pt", truncation=True,
+            padding=True, max_length=MAX_LENGTH
+        ).to(device)
+
+        with torch.no_grad():
+            outputs = model(**inputs)
+
+        batch_embeddings = outputs.last_hidden_state[:, 0, :].cpu().numpy()
+        embeddings.extend(batch_embeddings)
+
+    return np.array(embeddings)
+
 
 def load_data(file_path):
-    """Load real dataset and split into terminal vs. non-terminal patient texts."""
+    """Load dataset and return separated lists for terminal/non-terminal texts."""
     df = pd.read_csv(file_path)
-    terminal_texts = df[df.iloc[:,0] == "terminal"].iloc[:,1].dropna().tolist()
-    non_terminal_texts = df[df.iloc[:,0] == "non-terminal"].iloc[:,1].dropna().tolist()
+    terminal_texts = df[df.iloc[:, 0] == "terminal"].iloc[:, 1].dropna().tolist()
+    non_terminal_texts = df[df.iloc[:, 0] == "non-terminal"].iloc[:, 1].dropna().tolist()
     return terminal_texts, non_terminal_texts
 
-def generate_embeddings(text_list):
-    """Compute DistilBERT embeddings for a list of sentences."""
-    return np.array([get_sentence_embedding(text) for text in text_list])
 
-def apply_umap(embeddings, n_components=2):
-    """Reduce dimensionality of embeddings using UMAP."""
-    reducer = umap.UMAP(n_components=n_components, n_neighbors=10, min_dist=0.2, random_state=42)
+def apply_umap(embeddings, n_components=2, n_neighbors=10, min_dist=0.2):
+    """Reduce embeddings dimensionality using UMAP with adjustable parameters."""
+    reducer = umap.UMAP(
+        n_components=n_components,
+        n_neighbors=n_neighbors,
+        min_dist=min_dist,
+        random_state=seed
+    )
     return reducer.fit_transform(embeddings)
 
-def visualize_clusters(terminal_embeddings, non_terminal_embeddings):
-    """Plot UMAP visualization of terminal vs. non-terminal patient texts."""
-    all_embeddings = np.vstack((terminal_embeddings, non_terminal_embeddings))
-    umap_embeddings = apply_umap(all_embeddings)
 
-    labels = (["Terminal"] * len(terminal_embeddings)) + (["Non-Terminal"] * len(non_terminal_embeddings))
-    
+def visualize_embeddings(umap_embeddings, labels):
+    """Visualize UMAP embeddings with clear plotting style."""
     df_umap = pd.DataFrame(umap_embeddings, columns=["UMAP_1", "UMAP_2"])
     df_umap["Group"] = labels
 
     plt.figure(figsize=(10, 7))
     sns.scatterplot(
         data=df_umap, x="UMAP_1", y="UMAP_2", hue="Group",
-        palette={"Terminal": "red", "Non-Terminal": "blue"}, 
+        palette={"Terminal": "red", "Non-Terminal": "blue"},
         s=80, edgecolor="black", alpha=0.7
     )
     plt.title("UMAP Clustering of Patient Narratives", fontsize=14)
     plt.xlabel("UMAP Dimension 1", fontsize=12)
     plt.ylabel("UMAP Dimension 2", fontsize=12)
     plt.legend(title="Group")
-    plt.grid(True, linestyle="--", alpha=0.5)  # Add light grid for better readability
+    plt.grid(True, linestyle="--", alpha=0.5)
     plt.show()
 
+
 if __name__ == "__main__":
-    file_path = "cleaned_patient_data.csv" 
-
     try:
-        # Load & embed data
-        terminal_texts, non_terminal_texts = load_data(file_path)
-        terminal_embeddings = generate_embeddings(terminal_texts)
-        non_terminal_embeddings = generate_embeddings(non_terminal_texts)
+        print("Loading data...")
+        terminal_texts, non_terminal_texts = load_data(FILE_PATH)
 
-        # Visualize clusters
-        visualize_clusters(terminal_embeddings, non_terminal_embeddings)
+        print("Generating embeddings...")
+        terminal_embeddings = get_sentence_embeddings(terminal_texts)
+        non_terminal_embeddings = get_sentence_embeddings(non_terminal_texts)
+
+        print("Applying UMAP...")
+        all_embeddings = np.vstack((terminal_embeddings, non_terminal_embeddings))
+        umap_embeddings = apply_umap(all_embeddings)
+
+        labels = (["Terminal"] * len(terminal_embeddings)) + (["Non-Terminal"] * len(non_terminal_embeddings))
+
+        print("Visualizing embeddings...")
+        visualize_embeddings(umap_embeddings, labels)
 
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"An error occurred: {e}")
