@@ -30,9 +30,9 @@ torch.backends.cudnn.benchmark = False
 torch.use_deterministic_algorithms(True)
 
 # Check GPU availability
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cpu")
 
-# Constants (easily adjustable)
+# ConsFtants (easily adjustable)
 BATCH_SIZE = 32
 MAX_LENGTH = 128
 FILE_PATH = "cleaned_patient_data.csv"
@@ -72,13 +72,13 @@ def load_data(file_path):
 
 
 def apply_umap(embeddings, n_components=2, n_neighbors=10, min_dist=0.2):
-    """Reduce embeddings dimensionality using UMAP with adjustable parameters."""
+    """Reduce embeddings dimensionality using UMAP with set parameters for reproducability."""
     reducer = umap.UMAP(
-        n_components=n_components,
-        n_neighbors=n_neighbors,
-        min_dist=min_dist,
+        n_components=2,
+        n_neighbors=10,
+        min_dist=0.2,
         random_state=seed
-    )
+)
     return reducer.fit_transform(embeddings)
 
 
