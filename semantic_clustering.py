@@ -1,3 +1,4 @@
+import os
 import torch
 import random
 import umap
@@ -5,13 +6,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from transformers import DistilBertTokenizer, DistilBertModel
+from transformers import DistilBertTokenizerFast, DistilBertModel
 from tqdm import tqdm
-
-import os
-import torch
-import random
-import numpy as np
 
 # Set seeds and deterministic configurations
 seed = 42
@@ -29,21 +25,21 @@ torch.backends.cudnn.deterministic = True
 torch.backends.cudnn.benchmark = False
 torch.use_deterministic_algorithms(True)
 
-# Check GPU availability
+# Check GPU availability (temporarily forced to CPU for reproducibility testing)
 device = torch.device("cpu")
 
-# ConsFtants (easily adjustable)
+# Constants (easily adjustable)
 BATCH_SIZE = 32
 MAX_LENGTH = 128
 FILE_PATH = "cleaned_patient_data.csv"
 
 # Initialize tokenizer and model
-tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
+tokenizer = DistilBertTokenizerFast.from_pretrained("distilbert-base-uncased")
 model = DistilBertModel.from_pretrained("distilbert-base-uncased").to(device)
 
 
 def get_sentence_embeddings(texts, batch_size=BATCH_SIZE):
-    """Compute sentence embeddings in batches for efficiency."""
+    """Compute sentence embeddings using mean pooling in batches for efficiency."""
     embeddings = []
     model.eval()
 
@@ -57,7 +53,7 @@ def get_sentence_embeddings(texts, batch_size=BATCH_SIZE):
         with torch.no_grad():
             outputs = model(**inputs)
 
-        batch_embeddings = outputs.last_hidden_state[:, 0, :].cpu().numpy()
+        batch_embeddings = torch.mean(outputs.last_hidden_state, dim=1).cpu().numpy()
         embeddings.extend(batch_embeddings)
 
     return np.array(embeddings)
@@ -66,19 +62,21 @@ def get_sentence_embeddings(texts, batch_size=BATCH_SIZE):
 def load_data(file_path):
     """Load dataset and return separated lists for terminal/non-terminal texts."""
     df = pd.read_csv(file_path)
-    terminal_texts = df[df.iloc[:, 0] == "terminal"].iloc[:, 1].dropna().tolist()
-    non_terminal_texts = df[df.iloc[:, 0] == "non-terminal"].iloc[:, 1].dropna().tolist()
+    df.columns = ['group', 'text', 'source']
+
+    terminal_texts = df[df['group'].str.lower() == 'terminal']['text'].dropna().tolist()
+    non_terminal_texts = df[df['group'].str.lower() == 'non-terminal']['text'].dropna().tolist()
     return terminal_texts, non_terminal_texts
 
 
 def apply_umap(embeddings, n_components=2, n_neighbors=10, min_dist=0.2):
-    """Reduce embeddings dimensionality using UMAP with set parameters for reproducability."""
+    """Reduce embeddings dimensionality using UMAP with reproducible settings."""
     reducer = umap.UMAP(
-        n_components=2,
-        n_neighbors=10,
-        min_dist=0.2,
+        n_components=n_components,
+        n_neighbors=n_neighbors,
+        min_dist=min_dist,
         random_state=seed
-)
+    )
     return reducer.fit_transform(embeddings)
 
 
