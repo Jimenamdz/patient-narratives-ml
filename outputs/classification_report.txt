@@ -1,0 +1,8 @@
+              precision    recall  f1-score   support
+
+Non-Terminal       0.77      0.88      0.82       329
+    Terminal       0.79      0.64      0.71       244
+
+    accuracy                           0.77       573
+   macro avg       0.78      0.76      0.76       573
+weighted avg       0.78      0.77      0.77       573
