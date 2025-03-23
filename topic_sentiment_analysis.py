@@ -81,13 +81,11 @@ if __name__ == "__main__":
     # Print topics
     print_top_keywords(combined_model, "Combined Group Topics")
 
-    # Sentiment analysis
+    # After sentiment computation
     terminal_sentiments = analyze_sentiments(terminal_texts)
     non_terminal_sentiments = analyze_sentiments(non_terminal_texts)
 
-    # Debugging sentiment analysis output
-    print(f"Mean Terminal Sentiment: {np.mean(terminal_sentiments):.4f}")
-    print(f"Mean Non-Terminal Sentiment: {np.mean(non_terminal_sentiments):.4f}")
-
-    # Sentiment visualization
-    plot_sentiments(terminal_sentiments, non_terminal_sentiments)
+    # Save sentiment arrays
+    np.save("terminal_sentiment.npy", terminal_sentiments)
+    np.save("non_terminal_sentiment.npy", non_terminal_sentiments)
+    print("Sentiment arrays saved successfully (terminal_sentiment.npy, non_terminal_sentiment.npy)")

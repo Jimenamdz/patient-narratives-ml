@@ -75,16 +75,28 @@ def visualize_similarity(similarity_matrix):
     plt.ylabel("Terminal Texts")
     plt.show()
 
-
 if __name__ == "__main__":
     file_path = "cleaned_patient_data.csv"
+
     try:
         terminal_texts, non_terminal_texts = load_data(file_path)
+        
+        # Compute embeddings explicitly
+        terminal_embeddings = np.array([get_sentence_embedding(text) for text in terminal_texts if text.strip()])
+        non_terminal_embeddings = np.array([get_sentence_embedding(text) for text in non_terminal_texts if text.strip()])
+
+        # Save embeddings for reuse
+        np.save("terminal_embeddings.npy", terminal_embeddings)
+        np.save("non_terminal_embeddings.npy", non_terminal_embeddings)
+        print("Embeddings saved successfully as 'terminal_embeddings.npy' and 'non_terminal_embeddings.npy'")
+
+        # Compute and save cosine similarity matrix
         similarity_matrix = compute_similarity(terminal_texts, non_terminal_texts)
+        np.save("cosine_similarity_matrix.npy", similarity_matrix)
+        print("Cosine similarity matrix saved as 'cosine_similarity_matrix.npy'")
 
-        print("Cosine Similarity Matrix:")
-        print(similarity_matrix)
-
+        # Visualize similarity
         visualize_similarity(similarity_matrix)
+
     except Exception as e:
         print(f"Error: {e}")
