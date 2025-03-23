@@ -26,7 +26,8 @@ torch.backends.cudnn.benchmark = False
 torch.use_deterministic_algorithms(True)
 
 # Load DistilBERT tokenizer and model
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = torch.device("cpu")
+#device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 tokenizer = DistilBertTokenizerFast.from_pretrained("distilbert-base-uncased")
 model = DistilBertModel.from_pretrained("distilbert-base-uncased").to(device)
 
