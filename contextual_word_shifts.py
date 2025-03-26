@@ -37,21 +37,18 @@ nltk.download('punkt')
 
 
 def get_word_embedding(word, context):
-    if not word or not context:
-        return None
-
-    inputs = tokenizer(context, return_tensors="pt", truncation=True, padding=True, max_length=128, return_offsets_mapping=True).to(device)
-
-    with torch.no_grad():
-        outputs = model(**{k: v for k, v in inputs.items() if k != "offset_mapping"})
-
-    offset_mapping = inputs['offset_mapping'][0]
+    inputs = tokenizer(context, return_tensors="pt", truncation=True, padding=True, max_length=128).to(device)
+    tokens = tokenizer.convert_ids_to_tokens(inputs["input_ids"][0])
 
     word = word.lower()
-    word_positions = [i for i, (start, end) in enumerate(offset_mapping) if word in context[start:end].lower()]
+    # Simple exact match, handles subwords correctly
+    word_positions = [i for i, tok in enumerate(tokens) if tok.strip("#") == word]
 
     if not word_positions:
         return None
+
+    with torch.no_grad():
+        outputs = model(**inputs)
 
     embeddings = outputs.last_hidden_state[0, word_positions, :].cpu().numpy()
     word_embedding = np.mean(embeddings, axis=0)
