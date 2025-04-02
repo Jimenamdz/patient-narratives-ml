@@ -72,7 +72,7 @@ logging.info(f"Optimal number of clusters selected: {optimal_k}")
 
 # === Agglomerative Clustering (cosine similarity) ===
 print(f"Running Agglomerative clustering with {optimal_k} clusters...")
-agg_cluster = AgglomerativeClustering(n_clusters=optimal_k, affinity='cosine', linkage='average')
+agg_cluster = AgglomerativeClustering(n_clusters=optimal_k, metric='cosine', linkage='average')
 cluster_labels = agg_cluster.fit_predict(combined_features)
 
 # === Evaluation Metrics ===
