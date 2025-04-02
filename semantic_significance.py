@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.spatial.distance import cosine
 from transformers import DistilBertTokenizerFast, DistilBertModel
-from sklearn.decomposition import PCA
 
 # Set seeds and deterministic configurations
 seed = 42
@@ -137,17 +136,6 @@ if __name__ == "__main__":
         print(f"Max permuted distance: {np.max(permuted_distances):.4f}")
 
         plot_permutation_distribution(permuted_distances, observed_distance, p_value)
-
-        combined_embeddings = np.vstack([terminal_embeddings, non_terminal_embeddings])
-        labels = ['Terminal'] * len(terminal_embeddings) + ['Non-Terminal'] * len(non_terminal_embeddings)
-
-        pca = PCA(n_components=2, random_state=seed)
-        proj = pca.fit_transform(combined_embeddings)
-
-        plt.figure(figsize=(8, 6))
-        sns.scatterplot(x=proj[:, 0], y=proj[:, 1], hue=labels, alpha=0.6)
-        plt.title("PCA of Sentence Embeddings")
-        plt.show()
 
     except Exception as e:
         print(f"Unexpected error: {e}")
