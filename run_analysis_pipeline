@@ -17,6 +17,7 @@ if __name__ == "__main__":
         "contextual_word_shifts.py",
         "semantic_significance.py",
         "topic_sentiment_analysis.py"
+        "agglomerative_clustering.py"
     ]
 
     for script in scripts:
