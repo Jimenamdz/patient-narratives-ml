@@ -53,7 +53,7 @@ print("Determining optimal number of clusters...")
 silhouette_scores = []
 k_range = range(2, 7)
 for k in tqdm(k_range, desc="Evaluating number of clusters"):
-    clusterer = AgglomerativeClustering(n_clusters=k, affinity='cosine', linkage='average')
+    clusterer = AgglomerativeClustering(n_clusters=k, metric='cosine', linkage='average')
     labels_temp = clusterer.fit_predict(combined_features)
     score = silhouette_score(combined_features, labels_temp)
     silhouette_scores.append(score)
