@@ -3,12 +3,12 @@ import sys
 import os
 
 def run_script(script_name):
-    print(f"\n{'='*20}\nRunning {script}\n{'='*25}")
+    print(f"\n{'='*20}\nRunning {script_name}\n{'='*25}")
     result = os.system(f"python {script_name}")
     if result != 0:
         print(f"Error running {script_name}. Exiting pipeline.")
         exit(1)
-    print(f"✅ {script_name} completed successfully.\n")
+    print(f"{script_name} completed successfully.\n")
 
 if __name__ == "__main__":
     scripts = [
@@ -22,4 +22,4 @@ if __name__ == "__main__":
     for script in scripts:
         run_script(script)
 
-    print("🎉 Analysis pipeline executed successfully!")
+    print("Analysis pipeline executed successfully!")

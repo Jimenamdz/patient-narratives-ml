@@ -5,7 +5,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-import umap
 import nltk
 from nltk.tokenize import word_tokenize
 from sklearn.metrics.pairwise import cosine_similarity
@@ -142,6 +141,19 @@ def visualize_word_shifts(avg_terminal_embeddings, avg_non_terminal_embeddings):
     plt.show()
 
 
+def plot_cosine_similarities(similarities):
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    
+    plt.figure(figsize=(8, 6))
+    sns.barplot(x=list(similarities.keys()), y=list(similarities.values()), palette="coolwarm")
+    plt.title("Cosine Similarities (Terminal vs. Non-Terminal)")
+    plt.ylabel("Cosine Similarity")
+    plt.xlabel("Key Word")
+    plt.ylim(0, 1)
+    plt.show()
+
+
 if __name__ == "__main__":
     file_path = "cleaned_patient_data.csv"
     key_words = ["hope", "treatment", "pain", "future", "scared", "relief"]
@@ -155,8 +167,9 @@ if __name__ == "__main__":
         print("\nCosine Similarity of Word Usage (Terminal vs. Non-Terminal):")
         for word, sim in cosine_similarities.items():
             print(f"{word}: {sim:.4f}")
-
-        visualize_word_shifts(avg_terminal_embeddings, avg_non_terminal_embeddings)
+            
+    plot_cosine_similarities(cosine_similarities)
+        
 
     except Exception as e:
         print(f"Error: {e}")
