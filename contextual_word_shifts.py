@@ -168,7 +168,7 @@ if __name__ == "__main__":
         for word, sim in cosine_similarities.items():
             print(f"{word}: {sim:.4f}")
             
-    plot_cosine_similarities(cosine_similarities)
+        plot_cosine_similarities(cosine_similarities)
         
 
     except Exception as e:

@@ -7,6 +7,7 @@ from transformers import DistilBertTokenizerFast, DistilBertModel
 from sklearn.metrics.pairwise import cosine_similarity
 import matplotlib.pyplot as plt
 import seaborn as sns
+from empath import Empath
 
 # Set seeds and deterministic configurations for reproducibility
 seed = 42
@@ -31,6 +32,16 @@ device = torch.device("cpu")
 tokenizer = DistilBertTokenizerFast.from_pretrained("distilbert-base-uncased")
 model = DistilBertModel.from_pretrained("distilbert-base-uncased").to(device)
 
+# Initialize Empath
+lexicon = Empath()
+
+# Expanded categories list
+empath_categories = [
+    'sadness', 'anger', 'joy', 'fear', 'pain', 'health', 'death', 'family',
+    'friends', 'money', 'religion', 'negative_emotion', 'positive_emotion', 'medical_emergency',
+    'body', 'suffering', 'optimism', 'weakness', 'strength', 'emotional', 'loneliness', 'stress',
+    'affection', 'achievement', 'pessimism'
+]
 
 def get_sentence_embedding(text):
     """Extract sentence-level embedding using mean pooling of token embeddings."""
@@ -67,6 +78,11 @@ def load_data(file_path):
 
     return terminal_texts, non_terminal_texts
 
+def apply_empath(df):
+    empath_results = df['text'].apply(lambda text: lexicon.analyze(text, categories=empath_categories, normalize=True))
+    empath_df = pd.DataFrame(list(empath_results))
+    empath_df.columns = ['empath_' + col for col in empath_df.columns]
+    return empath_df
 
 def visualize_similarity(similarity_matrix):
     plt.figure(figsize=(10, 7))
@@ -98,6 +114,36 @@ if __name__ == "__main__":
 
         # Visualize similarity
         visualize_similarity(similarity_matrix)
+
+        # Convert texts back to DataFrames explicitly
+        terminal_df = pd.DataFrame({'text': terminal_texts})
+        non_terminal_df = pd.DataFrame({'text': non_terminal_texts})
+
+        
+        # Apply Empath separately
+        terminal_empath = apply_empath(terminal_df)
+        non_terminal_empath = apply_empath(non_terminal_df)
+
+        terminal_empath.to_csv("terminal_empath_features.csv", index=False)
+        non_terminal_empath.to_csv("non_terminal_empath_features.csv", index=False)
+        print("Empath features saved successfully.")
+
+        # Combine embeddings and Empath into single files for convenience
+        terminal_combined = pd.concat([
+            terminal_df.reset_index(drop=True), 
+            terminal_empath, 
+            pd.DataFrame(terminal_embeddings, columns=[f'embedding_{i}' for i in range(terminal_embeddings.shape[1])])
+        ], axis=1)
+
+        non_terminal_combined = pd.concat([
+            non_terminal_embeddings.reset_index(drop=True), 
+            non_terminal_empath, 
+            pd.DataFrame(non_terminal_embeddings, columns=[f'embedding_{i}' for i in range(non_terminal_embeddings.shape[1])])
+        ], axis=1)
+
+        terminal_combined.to_csv("terminal_combined_features.csv", index=False)
+        non_terminal_combined.to_csv("non_terminal_combined_features.csv", index=False)
+        print("Combined terminal and non-terminal datasets saved.")
 
     except Exception as e:
         print(f"Error: {e}")

@@ -16,7 +16,7 @@ if __name__ == "__main__":
         "semantic_clustering.py",
         "contextual_word_shifts.py",
         "semantic_significance.py",
-        "topic_sentiment_analysis.py"
+        "topic_sentiment_analysis.py",
         "agglomerative_clustering.py"
     ]
 

@@ -153,27 +153,52 @@ perm_importance = permutation_importance(
     rf_grid, X_test, y_test, n_repeats=20, random_state=42, n_jobs=-1
 )
 
+# Build feature importance DataFrame from the model
 importance_df = pd.DataFrame({
     "feature": X.columns,
     "importance_mean": perm_importance.importances_mean,
     "importance_std": perm_importance.importances_std
-}).sort_values("importance_mean", ascending=False)
+})
 
-importance_df.to_csv(os.path.join(output_dir, "rf_feature_importance.csv"), index=False)
+# Load the original feature sources to map back to Empath
+terminal_combined = pd.read_csv("terminal_combined_features.csv")
+non_terminal_combined = pd.read_csv("non_terminal_combined_features.csv")
+combined_full = pd.concat([terminal_combined, non_terminal_combined], ignore_index=True)
+
+# Identify which columns are embeddings and which are empath scores
+embedding_feature_cols = [col for col in combined_full.columns if col.startswith("embedding_")]
+empath_feature_cols = [col for col in combined_full.columns if col.startswith("empath_")]
+
+# Compute correlation matrix to match embeddings to empath categories
+correlations = combined_full[embedding_feature_cols + empath_feature_cols].corr()
+correlations_subset = correlations.loc[embedding_feature_cols, empath_feature_cols]
+
+# Build mapping from embedding feature to best empath category
+correlation_mapping = correlations_subset.abs().idxmax(axis=1).to_dict()
+
+# Map from numeric string (e.g., '522') to correlated empath label using the original embedding column
+importance_df["corrected_empath_label"] = importance_df["feature"].apply(
+    lambda x: correlation_mapping.get(f"embedding_{x}", "sentiment") if x != "sentiment" else "sentiment"
+)
+
+# Construct new label: "305 (empath_affection)"
+importance_df["feature"] = importance_df.apply(
+    lambda row: f"{row['feature']} ({row['corrected_empath_label']})" if row['corrected_empath_label'] != 'sentiment' else 'sentiment',
+    axis=1
+)
+
+# Save and visualize
+importance_df_sorted = importance_df.sort_values("importance_mean", ascending=False)
+importance_df_sorted.to_csv(os.path.join(output_dir, "rf_feature_importance_with_empath.csv"), index=False)
 
 plt.figure(figsize=(10,6))
-sns.barplot(x='importance_mean', y='feature', data=importance_df.head(15), palette="coolwarm")
-plt.title('Top 15 Random Forest Features')
+sns.barplot(x='importance_mean', y='feature', data=importance_df_sorted.head(15), palette="coolwarm")
+plt.title('Top 15 Random Forest Features with Empath Categories')
 plt.xlabel('Permutation Importance Mean')
-plt.ylabel('Feature')
+plt.ylabel('Feature (Empath Category)')
 plt.tight_layout()
-plt.savefig(os.path.join(output_dir, "rf_feature_importance.png"))
+plt.savefig(os.path.join(output_dir, "rf_feature_importance_empath.png"))
 plt.close()
 
-logging.info("Feature importance analysis saved.")
-
-# ==========================
-# Final logging message
-# ==========================
-logging.info("All processes completed successfully.")
+logging.info("Final corrected feature importance analysis saved.")
 print(f"All outputs saved in '{output_dir}' folder.")
