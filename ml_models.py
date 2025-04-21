@@ -143,6 +143,23 @@ def evaluate_model(grid, name):
 
     logging.info(f"{name} evaluation done: ROC-AUC {auc:.4f}")
 
+# Compute log-loss across CV folds
+logreg_losses = -cross_val_score(logreg_pipeline, X_train_balanced, y_train_balanced, cv=10, scoring='neg_log_loss')
+rf_losses = -cross_val_score(rf_pipeline, X_train_balanced, y_train_balanced, cv=10, scoring='neg_log_loss')
+
+# Plotting
+plt.figure(figsize=(10, 4))
+plt.plot(range(1, len(logreg_losses) + 1), logreg_losses, marker='o', label='Logistic Regression')
+plt.plot(range(1, len(rf_losses) + 1), rf_losses, marker='o', label='Random Forest')
+plt.xlabel('Fold')
+plt.ylabel('Log-Loss')
+plt.title('Training Loss per Fold (10-fold CV)')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.savefig(os.path.join(output_dir, "training_loss_curves.png"))
+plt.close()
+
 evaluate_model(logreg_grid, "Logistic_Regression")
 evaluate_model(rf_grid, "Random_Forest")
 
